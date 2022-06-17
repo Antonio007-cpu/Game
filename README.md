@@ -62,6 +62,7 @@ User Story:
         2. Add a button to return to main Menu
 
 Game Mechanics:
+
     1. Goal:
         - Reach a certain goal of points to proceed up the levels
         - Once you reach Final level 5 <- This should be a boss fight
@@ -81,4 +82,20 @@ Game Mechanics:
                 -Hard = 3 or more to kill
         - Should also move left to right 
         - Dissapear when hit at according kill rate
+
+    4. Player Death:
+        - Should display an "Game Over" message
+        - Display according buttons
+        - Display the score reached in level
+
+Future Adding and upcoming Updates:
+    1. More enemies
+    2. More Character (at least 2 more)
+    3. More challenging levels
+    4. Extra "Tripy" Level
+    5. Diferent bosses
+    6. Timed Level
+    7. Weapons = Different weapons with stats
+    8. Power ups during the levels
+    9. Save progress and continue feature 
 
