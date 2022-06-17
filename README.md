@@ -68,7 +68,7 @@ Game Mechanics:
         - Once you reach Final level 5 <- This should be a boss fight
 
     2. Player Character:
-        - Should move up, down, left and right starting from the button up to certain height of the gaming canvas
+        - Should move up, down, left and right starting from the botton up to certain height of the gaming canvas
         - Assure the health and fire rate goes with the selected Character
         - Health should go down 5 or 10 at a time when hit
         - Stop shooting when hit
@@ -89,6 +89,7 @@ Game Mechanics:
         - Display the score reached in level
 
 Future Adding and upcoming Updates:
+
     1. More enemies
     2. More Character (at least 2 more)
     3. More challenging levels
