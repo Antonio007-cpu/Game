@@ -100,4 +100,6 @@ Future Adding and upcoming Updates:
     8. Power ups during the levels
     9. Save progress and continue feature 
 
-![First](https://github.com/Antonio007-cpu/Game/tree/main/Image/First.jpg)
+![First](Image/First.jpg)
+
+![Second](Image/Second.jpg)
