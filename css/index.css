@@ -1,4 +1,14 @@
 body{
     background-color: black;
+    font-family: 'Times New Roman', Times, serif;
     
+}
+
+h1{
+    color:greenyellow;
+    
+}
+
+p{
+    color: green;
 }
