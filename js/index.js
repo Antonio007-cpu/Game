@@ -13,9 +13,9 @@ class Player{
         }
 
         const image=new Image()
-        image.src='./Image/Player.png'
+        image.src='./Image/pngwing.com.png'
         image.onload=()=>{
-            const scale=0.15
+            const scale=0.08
             this.image=image
             this.width=image.width *scale
             this.height=image.height *scale
