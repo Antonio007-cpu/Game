@@ -47,6 +47,20 @@ class Player{
     }
 }
 
+class Projectile{
+    constructor(position){
+        this.position=position
+        this.velocity=20
+
+    }
+    draw(){
+    context.beginPath()
+    context.arc(this.position.x,this.position.y,this.radios,0,Math.PI*2)
+    context.fillstyle='green'
+
+    }
+
+}
 const player=new Player()
 const keys={
     a:{
@@ -69,9 +83,9 @@ function animate(){
     // player.draw()
     player.update()
 
-    if (keys.a.pressed){
+    if (keys.a.pressed && player.position.x >=0){
         player.velocity.x= -5
-    } else if(keys.d.pressed){
+    } else if(keys.d.pressed && player.position.x + player.width <=canvas.width){
         player.velocity.x=5
     }
     else{
