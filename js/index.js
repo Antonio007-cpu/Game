@@ -71,6 +71,28 @@ class Projectile {
 
 }
 
+class VirusProjectile {
+    constructor({position, velocity}){
+        this.position=position
+        this.velocity=velocity
+
+        this.width= 3
+        this.height=10
+    }
+
+    draw(){
+        context.fillStyle='red'
+        context.fillRect(this.position.x, this.position.y, this.width, this.height)
+    }
+
+    update(){
+        this.draw()
+        this.position.x += this.velocity.x
+        this.position.y += this.velocity.y
+    }
+
+}
+
 class Virus{
     constructor({position}){
         this.velocity={
@@ -112,6 +134,19 @@ class Virus{
         this.position.y += velocity.y
         }
     }
+
+    shoot(VirusProjectiles){
+        VirusProjectiles.push(new VirusProjectile({
+            position:{
+                x:this.position.x + this.width/2,
+                y: this.position.y + this.height
+            },
+            velocity:{
+                x:0,
+                y:5
+            }
+        }))
+    }
 }
 
 class Grid{
@@ -127,8 +162,8 @@ class Grid{
         }
         this.virus =[]
 
-        const columns = Math.floor(Math.random() *10 + 5)
-        const rows =Math.floor(Math.random() * 5 + 2)
+        const columns = Math.floor(Math.random() *3 + 5)
+        const rows =Math.floor(Math.random() * 3 + 2)
 
         this.width =columns * 70
         for(let x=0; x<columns; x++){
@@ -158,6 +193,8 @@ class Grid{
 const player=new Player()
 const projectiles =[]
 const grids=[]
+const VirusProjectiles=[]
+
 const keys={
     a:{
         pressed:false
@@ -173,6 +210,8 @@ player.draw()
 
 let frames = 0
 let randomInterval =Math.floor((Math.random() * 500) + 500)
+
+
 function animate(){
     requestAnimationFrame(animate)
     context.fillStyle='black'
@@ -180,6 +219,10 @@ function animate(){
     // console.log('default')
     // player.draw()
     player.update()
+    VirusProjectiles.forEach(VirusProjectile =>{
+        VirusProjectile.update()
+    })
+
     projectiles.forEach((projectile,index) =>{
 
         if (projectile.position.y + projectile.radius <=0){
@@ -192,8 +235,14 @@ function animate(){
         }
     })
 
-    grids.forEach((grid) => {
+    grids.forEach((grid,gridIndex) => {
         grid.update()
+        //Spawning projectiles from virus
+        if (frames % 100 === 0 && grid.virus.lenght > 0){
+            grid.virus[Math.floor(Math.random() * grid.virus.lenght)].shoot(VirusProjectiles)
+        }
+
+
         grid.virus.forEach((virus,i) =>{
             virus.update({velocity: grid.velocity})
 
@@ -208,6 +257,18 @@ function animate(){
                         if (virusFound&&projectileFound){
                            grid.virus.splice(i,1)
                            projectile.splice(j,1) 
+                        }
+
+                        if (grid.virus.lenght >0){
+                            const firstvirus=grid.virus[0]
+                            const lastvirus=grid.virus[grid.virus.lenght - 1]
+
+                            grid.width = lastvirus.position.x - firstvirus.position.x +lastvirus.width
+
+                            grid.position.x = firstvirus.position.x
+                        }
+                        else{
+                            grids.splice(gridIndex, 1)
                         }
                         
                     },0)
@@ -229,6 +290,8 @@ function animate(){
         randomInterval =Math.floor((Math.random() * 500) + 500)
         frames=0
     }
+
+    
 
     frames++
 }
