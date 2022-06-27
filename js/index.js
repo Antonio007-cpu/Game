@@ -71,18 +71,20 @@ class Projectile {
 
 }
 
-class VirusProjectile {
+class InvaderProjectile {
     constructor({position, velocity}){
         this.position=position
         this.velocity=velocity
 
-        this.width= 3
-        this.height=10
+        this.radius=5
     }
 
     draw(){
-        context.fillStyle='red'
-        context.fillRect(this.position.x, this.position.y, this.width, this.height)
+        context.beginPath()
+        context.arc(this.position.x ,this.position.y ,this.radius , 0, Math.PI * 2)
+        context.fillStyle = 'white'
+        context.fill()
+        context.closePath()
     }
 
     update(){
@@ -135,15 +137,15 @@ class Virus{
         }
     }
 
-    shoot(VirusProjectiles){
-        VirusProjectiles.push(new VirusProjectile({
+    shoot(invaderProjectiles){
+        invaderProjectiles.push(new InvaderProjectile({
             position:{
-                x:this.position.x + this.width/2,
+                x: this.position.x + this.width/2,
                 y: this.position.y + this.height
             },
             velocity:{
                 x:0,
-                y:5
+                y:7
             }
         }))
     }
@@ -193,7 +195,7 @@ class Grid{
 const player=new Player()
 const projectiles =[]
 const grids=[]
-const VirusProjectiles=[]
+const invaderProjectiles=[]
 
 const keys={
     a:{
@@ -219,8 +221,17 @@ function animate(){
     // console.log('default')
     // player.draw()
     player.update()
-    VirusProjectiles.forEach(VirusProjectile =>{
-        VirusProjectile.update()
+    invaderProjectiles.forEach((invaderProjectile, index) =>{
+
+        if (invaderProjectile.position.y + invaderProjectile.height >= canvas.height){
+            setTimeout(() =>{
+                invaderProjectiles.splice(index, 1)
+                },0)
+        } else { invaderProjectile.update()}
+
+        if (invaderProjectile.position.y + invaderProjectile.height >= player.position.y && invaderProjectile.position.x + invaderProjectile.width >= player.position.x && invaderProjectile){
+            console.log('You Lose!')
+        }
     })
 
     projectiles.forEach((projectile,index) =>{
@@ -239,7 +250,7 @@ function animate(){
         grid.update()
         //Spawning projectiles from virus
         if (frames % 100 === 0 && grid.virus.lenght > 0){
-            grid.virus[Math.floor(Math.random() * grid.virus.lenght)].shoot(VirusProjectiles)
+            grid.virus[Math.floor(Math.random() * grid.virus.lenght)].shoot(invaderProjectiles)
         }
 
 
@@ -291,6 +302,7 @@ function animate(){
         frames=0
     }
 
+    
     
 
     frames++
